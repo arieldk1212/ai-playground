@@ -1,0 +1,34 @@
+---
+Language:        Cpp
+BasedOnStyle:  Google
+Standard:        c++20
+IndentWidth:     2
+TabWidth:        2
+UseTab:          Never
+ColumnLimit:     80
+AlignAfterOpenBracket: Align
+BinPackParameters: true
+AlignEscapedNewlines: Left
+AlwaysBreakTemplateDeclarations: Yes
+PackConstructorInitializers: Never
+BreakConstructorInitializersBeforeComma: false
+IndentPPDirectives: None
+SortIncludes:    true
+AllowShortFunctionsOnASingleLine: Inline
+DerivePointerAlignment: false
+PointerAlignment: Left
+FixNamespaceComments: true
+InsertNewlineAtEOF: true
+InsertBraces: true
+
+IncludeCategories:
+  - Regex:           '^"([^/.]+\.h)"'
+    Priority:        0
+  - Regex:           '^<sys/|^<unistd.h>|^<windows.h>'
+    Priority:        1
+  - Regex:           '^<[^.]*>'
+    Priority:        2
+  - Regex:           '^<.*>'
+    Priority:        3
+  - Regex:           '.*'
+    Priority:        4

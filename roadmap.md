@@ -2,7 +2,8 @@
 
 ## Current Position
 
-1. Into ML
+1. Into ML - Linear regression,Logistic regression, Classification, overfitting.
+<https://developers.google.com/machine-learning/crash-course>
 
 ## Subjects
 
