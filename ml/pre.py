@@ -90,8 +90,47 @@ Loss
 Types of Loss:
 1. L1 Loss -> The sum of the absolute values of the difference
   between the predicted values and the actual value (abs(actual-predicted)).
-2. Mean absolute error -> The average of L1 losses across a set of N examples.
-3. L2 Loss -> The same as L1 but squared.
-4. Mean squared error -> The same as MAE but squared.
-5. Root mean squared error -> The same as MSE but square root.
+2. Mean absolute error -> The average of L1 losses across a set of N examples. (average)
+3. L2 Loss -> The same as L1 but squared. (pow)
+4. Mean squared error -> The same as MAE but squared. (average, pow)
+5. Root mean squared error -> The same as MSE but square root. (average, pow, sqrt)
+
+The higher the loss the larger squaring makes it, so is the opposite.
+MAE & RMSE are more suitable for human-interpretable.
+Example:
+  Model:   y' = 34 +(-0.46) * x1;
+    Weight = -4.6
+    Bias = 34
+  Now lets say we expect to get 24, but we got 23.1 after formatting with the label.
+  Therefore: (actual - predicted)^2 = (24 - 23.1)^2 = 0.81 -> L2 Loss
+Usually given a dataset we have a "normal" value of where it will be located, but
+  there can always be unpredicted values, we call them "outliers",
+  It can also refer to how far off a model's prediction are from the real values.
+"""
+
+"""
+Gradian Descent
+  Mathematical technique for training a modle that finds the weight and bias that produces
+  the lowest loss, done by using calculus.
+  It knows by how much to adjust the weight and bias from the loss value.
+  It basically repeats this pattern in order to find to most optimal values for the model.
+  Multiplies the weight and bias by some constant and runs it again.
+To study more we can also take a look at the loss graph and see if the model has converged - 
+  meaning that the loss has gotten to a point where it almost doesn't change (flat line).
+  What we can take from it is that once the model gets converged, the value at which it gets
+  to that state is how many iterations the model needed to be do in order to get the lowest value
+  of loss.
+  They produce a convex surface (U-Shape).
+"""
+
+"""
+Hyperparameters
+  Variables that control different aspects of training: Learning Rate, Batch Size, Epochs.
+  Values that you can control.
+
+Learning Rate -> a float that influences how quickly the model converges, if too low: the model
+  can take along time to converge, if too high: it may never converges, but instead bounces
+  around with the values of weight and bias that minimize the loss.
+  It determines the magnitude of the changes to make for the weight and bias during
+  each step of the gradiant descent process.
 """
