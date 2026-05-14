@@ -110,7 +110,7 @@ Usually given a dataset we have a "normal" value of where it will be located, bu
 
 """
 Gradian Descent
-  Mathematical technique for training a modle that finds the weight and bias that produces
+  Mathematical technique for training a model that finds the weight and bias that produces
   the lowest loss, done by using calculus.
   It knows by how much to adjust the weight and bias from the loss value.
   It basically repeats this pattern in order to find to most optimal values for the model.
@@ -133,4 +133,22 @@ Learning Rate -> a float that influences how quickly the model converges, if too
   around with the values of weight and bias that minimize the loss.
   It determines the magnitude of the changes to make for the weight and bias during
   each step of the gradiant descent process.
+
+Batch Size -> The number of example (y=mx+b) the model processes before updating its weight 
+  and bias.
+  Default technique:
+    if data set contains 1K examples and the model trains for 20 epochs, the model
+    updates the weight and bias 20 times.
+  Two techniques to get it right:
+    1. Stochastic gradian descent (SGD) -> Batch size of one per iteratio, woorks, but noisy.
+        for dataset 1K, the model trains for 20 epochs, the model updates the weight and bias
+        20K times.
+    2. Mini-batch stochastic gradiant descent (mini-batch SGD) -> for N number of points, the batch
+        size is above 1, below N, choosing at random.
+        if dataset contains 1K examples and batch size is 100, the model trains for 20
+        epochs, the model updates the weight and bias 200 times.
+
+Epochs -> Means that the model has processes every example in the training set ONCE.
+  for example: given 1K examples, mini-batch of 100, it will take 10 iterations
+  to complete ONE epoch.
 """
