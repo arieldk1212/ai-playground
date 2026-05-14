@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.15)
+project(agenty LANGUAGES CXX VERSION 1.1.1)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+option(BUILD_LLAMACPP "Enable local inference using llama.cpp" ON)
+option(BUILD_CLOUD "Enable cloud inference from HTTP/S server" ON)
+
+if(BUILD_LLAMACPP)
+  set(LLAMA_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+  set(LLAMA_BUILD_SERVER OFF CACHE BOOL "" FORCE)
+  set(LLAMA_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+  find_package(llama CONFIG REQUIRED)
+  message(STATUS ">>> Building with Local llama.cpp support")
+endif()
+
+if(BUILD_CLOUD)
+  message(STATUS ">>> Building with HTTP/S support")
+  find_package(OpenSSL)
+  if(OPENSSL_FOUND)
+    message(STATUS ">>> SSL support ENABLED (HTTPS)")
+  else()
+    message(STATUS ">>> SSL support DISABLED (HTTP)")
+  endif()
+endif()
