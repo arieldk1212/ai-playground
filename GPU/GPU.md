@@ -38,3 +38,15 @@ There are 2 types of cache inside the gpu:
 1. Wrap Schedualer -> Issues Instructions, stress relief, commander of the compute units, slow! one instruction at a time.. therefore the Tensor Core exists.
 2. FP32 -> Cuda cores, its same as ALU (adder or subtractor.. scalar ops)
 3. Tensor Core 4th Generation - Parallalizes all the workers, it makes the compute fast, can launch one instruction to compute an entire matrices multiplication -> current can compute 256x256x16 (blackwell architecture - <https://www.nvidia.com/en-eu/data-center/technologies/blackwell-architecture/>)
+
+## Writing Kernels
+
+### Quick Recap of the GPU Memory
+
+1. Register Memory (RMEM) - Thread: Has private registers, synchronization - SMEM
+2. L1 cache / Shared Memory (SMEM) - a group of up to 1024 threads, guaranteed to be concurrently scheduled on a single SM, multiple thread blocks are independently scheduled across SMs syncchronozation.
+3. Device Memory (DMEM) - thread block cluster - a group of up to 8 thread blocks, guaranteed to concurrently scheduled on a GPC synchronozation.
+4. L2 cache - group of clusters or thread blocks synchronization. L2 or GMEM.
+5. Device Memory (DMEM).
+
+* Check out code snippet - link in prac.cuh.

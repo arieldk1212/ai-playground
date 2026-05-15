@@ -193,4 +193,8 @@ Regularization -> We will learn furthur more in the dataset course, but in gener
 """
 Classification
 
+If our goal is not to ouput a probability like logistic regression, but, to output a category for example: spam, not spam.
+Classification is the task of predicting which set of classes (categories) an example belongs to in.
+By the end, we will know how to convert a logistic regression model that predicts a probability into a binaty classification model that predicts on of 2 classes.
+
 """
