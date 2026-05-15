@@ -197,4 +197,46 @@ If our goal is not to ouput a probability like logistic regression, but, to outp
 Classification is the task of predicting which set of classes (categories) an example belongs to in.
 By the end, we will know how to convert a logistic regression model that predicts a probability into a binaty classification model that predicts on of 2 classes.
 
+Classification Threshold ->
+We set a threshold for categorizing the result, if above the threshold == positive class, below = negative class.
+When dealing with true/false its best practice to use a confusion matrix, each True or False can be:
+  1. True Positive (TP) -> (spam email as input, detected as spam)
+  2. False Positive (FP) -> (non-spam email as input, sent to spam)
+  3. True Negative (TN) -> (non-spam email as input, sent to inbox)
+  4. False Negative (FN) -> (spam email as input, sent to inbox)
+  From all the values that the model predicted, we can test and compare with the actual number of correct values (from the dataset), and then decide if the dataset is imbalanced or not.
+  We can play with the threshold if False Positive are expensive, so we want to ignore them by increasing the threshold.
+
+Accuracy -> Proportion of all the classifications that were correct, defined as:                                                     // == 1 Only if all True Positives are above the threshold with no false
+  correct classifications / total classifications == (TP+TN) / (TP + TN +FP + FN)
+  A "Perfect" model would have zero false negatives and zero false positives.
+  Often the generic evaluation metric.
+  Usually when the dataset is imbalanced or where one kind of mistake (FN or FP) is more costly than the other, it is better to optimize for one of the other metrics instead.
+
+Recall / True Positive Rate (TPR) -> correctly classified actual positives / all actual positives == (TP) / (TP + FN)               // TRUE == 1 if all True Positives are above the threshold
+  False negatives are actual positives that were classified as negatives.
+  Another name for Recall is Probability of Detection.
+  "Perfect" model hols recall value of 1.
+
+False Positive Rate (FPR) -> incorrectly classified actual negatives / all actual negatives == (FP) / (FP + TN)                     // FALSE
+  False positives are actual negatives that were misclassified.
+  "Perfect" model holds FPR value of 0.
+
+Precision -> correctly classified actual positives / everything classified as positive == (TP) / (TP + FP)                           // POSITIVES == 1 if there are only True Positives above the threshold.
+
+Guidance:
+
+  Accuracy:
+    1. Use as a rough indicator of model training progress for balanced datasets.
+    2. For model performance, use only in combinations with other metrics.
+    3. Avoid for imbalanced datasets, Consider another metric.
+
+  Recall:
+    1. Use when false negatives are more expensive than false positives.
+  
+  FPR:
+    1. Use when false positives are more expensive than false negatives.
+
+  Precision:
+    1. Use when its very important for positive predictions to be accurate.
 """
