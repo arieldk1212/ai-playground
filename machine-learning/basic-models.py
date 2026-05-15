@@ -152,3 +152,45 @@ Epochs -> Means that the model has processes every example in the training set O
   for example: given 1K examples, mini-batch of 100, it will take 10 iterations
   to complete ONE epoch.
 """
+
+# Logistic Regression
+"""
+Efficient mechanism for calculating probabilities.
+We can map out output to 2 types:
+  1. "As is", meaning as percentage -> if spam-prediction, the value is 0.932 == 93.2%
+  2. Converted to a binary representation such as True/False, Spam/Not Spam.
+
+We will focus on mapping the output to binary in the classification section, for now, we focus on "as is".
+
+We are able to ensure the output can represent a probability by using "Logistic Functions" (Mathematical term), thanks to that we are able to generate an output inrange of 0 ... 1.
+The standard Logistic Function is called the "Sigmoid Function", as the input "x" increases, the sigmoid function increases but never approaches 1, so is vice-versa.
+The following equation represents the linear component of a logistic regression model:
+  z = b + w1x1 + w2x2 + ...
+  z = the output, called "log odds"
+  b = the bias
+  w = the learned weight value
+  x = the feature value
+After that we than pass the output (z) to the sigmoid function.
+"""
+
+"""
+Loss and regularization
+
+The models use Log Loss as the loss function instead of squared loss (L2).
+Applying regularization is critical to prevent overfitting.
+
+Due to the fact that the rate of change in a logistic function isn't constant, we can't use L2 (for linear model), so we use the Log Loss (in the sigmoid the function is shaped and not a vector!),
+  it returns the logarithm of the magnitude of the change, rather than just the distance from data to prediction.
+
+Regularization -> We will learn furthur more in the dataset course, but in general, its a mechanism for penalizing model complexity during training, without it, the asymptotic nature of
+  logistic regression will be driving towards 0 if the number of features arises.
+  There are 2 strategies to decrease model complexity:
+    1. L2 Regularization.
+    2. Early Stopping -> Limiting the number of steps to halt training while loss is decreasing.
+"""
+
+# Classification
+"""
+Classification
+
+"""

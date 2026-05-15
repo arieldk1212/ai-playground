@@ -1,7 +1,8 @@
+from typing import List
+
 import keras
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 import ml_edu.results
 import ml_edu.experiment
@@ -78,6 +79,97 @@ def train_model(
         name=experiment_name,
         settings=settings,
         model=model,
-        epochs=history.epochs,
+        epochs=history.epoch,
         metrics_history=pd.DataFrame(history.history),
     )
+
+
+settings_1 = ml_edu.experiment.ExperimentSettings(
+    learning_rate=0.001,
+    number_epochs=20,
+    batch_size=50,
+    input_features=["TRIP_MILES"],
+)
+metrics = [keras.metrics.RootMeanSquaredError(name="rmse")]
+model_1 = create_model(settings_1, metrics)
+# experiment_1 = train_model("One", model_1, training_df, "FARE", settings_1)
+# ml_edu.results.plot_experiment_metrics(experiment_1, ["rmse"])
+# ml_edu.results.plot_model_predictions(experiment_1, training_df, "FARE")
+
+
+settings_2 = ml_edu.experiment.ExperimentSettings(
+    learning_rate=0.001,
+    number_epochs=20,
+    batch_size=50,
+    input_features=["TRIP_MILES", "TRIP_MINUTES"],
+)
+training_df["TRIP_MINUTES"] = training_df["TRIP_SECONDS"] / 60
+metrics = [keras.metrics.RootMeanSquaredError(name="rmse")]
+model_2 = create_model(settings_2, metrics)
+experiment_2 = train_model("One", model_2, training_df, "FARE", settings_2)
+# ml_edu.results.plot_experiment_metrics(experiment_2, ["rmse"])
+# ml_edu.results.plot_model_predictions(experiment_2, training_df, "FARE")
+
+# comparison = ml_edu.results.compare_experiment(
+#     [experiment_1, experiment_2], ["rmse"], training_df, training_df["FARE"].values
+# )
+
+
+class Predictions:
+    @staticmethod
+    def _format_currency(x):
+        return "${:.2f}".format(x)
+
+    @staticmethod
+    def build_batch(df: pd.DataFrame, batch_size: int) -> pd.DataFrame:
+        batch = df.sample(n=batch_size).copy()
+        batch.set_index(np.arange(batch_size), inplace=True)
+        return batch
+
+    @staticmethod
+    def predict_fare(
+        model: keras.Model,
+        df: pd.DataFrame,
+        features: List[str],
+        label: str,
+        batch_size=50,
+    ) -> pd.DataFrame:
+        batch = Predictions.build_batch(df, batch_size)
+        predicted_values = model.predict_on_batch(
+            x={name: batch[name].values for name in features}
+        )
+
+        data = {
+            "PREDICTED_FARE": [],
+            "OBSERVED_FARE": [],
+            "L1_LOSS": [],
+            features[0]: [],
+            features[1]: [],
+        }
+        for i in range(batch_size):
+            predicted = predicted_values[i][0]
+            observed = batch.at[i, label]
+            data["PREDICTED_FARE"].append(Predictions._format_currency(predicted))
+            data["OBSERVED_FARE"].append(Predictions._format_currency(observed))
+            data["L1_LOSS"].append(
+                Predictions._format_currency(abs(observed - predicted))
+            )
+            data[features[0]].append(batch.at[i, features[0]])
+            data[features[1]].append("{:.2f}".format(batch.at[i, features[1]]))
+
+        output_df = pd.DataFrame(data)
+        return output_df
+
+    @staticmethod
+    def show_predictions(output: pd.DataFrame) -> None:
+        header = "-" * 80
+        banner = header + "\n" + "|" + "PREDICTIONS".center(78) + "|" + "\n" + header
+        print(banner)
+        print(output)
+        return
+
+
+output = Predictions.predict_fare(
+    experiment_2.model, training_df, experiment_2.settings.input_features, "FARE"
+)
+Predictions.show_predictions(output)
