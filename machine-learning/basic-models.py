@@ -225,7 +225,6 @@ False Positive Rate (FPR) -> incorrectly classified actual negatives / all actua
 Precision -> correctly classified actual positives / everything classified as positive == (TP) / (TP + FP)                           // POSITIVES == 1 if there are only True Positives above the threshold.
 
 Guidance:
-
   Accuracy:
     1. Use as a rough indicator of model training progress for balanced datasets.
     2. For model performance, use only in combinations with other metrics.
@@ -239,4 +238,14 @@ Guidance:
 
   Precision:
     1. Use when its very important for positive predictions to be accurate.
+
+ROC -> A visual representation of model performance across all thresholds.
+AOC -> Represents the probability that the model, if given a randomly chosen positive and negative exmaple, will rank the 
+  positive higher than the negative.
+  Useful for comparing the performance of two different models.
+  The points on the curve (ROC) closest to the point (0, 1) are the best-performing thresholds for the given model.
+
+Prediction Bias -> A quick check that can flag issues with the model or training data early on (the difference).
+
+Mini-Class Classification -> An extension of binary classification
 """
