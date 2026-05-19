@@ -1,10 +1,6 @@
-import torch
-import numpy as np
-import torch.nn as nn
-
 # Introduction
 """
-Model - mathematical relationship derived from data that an 
+Model - mathematical relationship derived from data that an
   ML system uses to make predictions
 Supervised, Unsupervised, Reinforcement, GenAI
 
@@ -14,12 +10,12 @@ Supervised Learning - Models can make predictions after seeing lots
   We basically tell it the correct answer, the data contains it.
   1. Regression Model - Predicts a numaric value (Weather model that
       predicts the amount of rain.)
-  2. Classification Model - The likelihood that something belongs to 
+  2. Classification Model - The likelihood that something belongs to
       to a category.
       The output value can be or binary or multiclass.
 
 Unsupervised Learning - Models aim to identify meaningful patterns
-  within a dataset, they do that by relaying on a technique called 
+  within a dataset, they do that by relaying on a technique called
   "Clustering" - Organize to groups.
   Differs from Classification because the clusters aren't defined by us.
 
@@ -244,6 +240,7 @@ AOC -> Represents the probability that the model, if given a randomly chosen pos
   positive higher than the negative.
   Useful for comparing the performance of two different models.
   The points on the curve (ROC) closest to the point (0, 1) are the best-performing thresholds for the given model.
+  An AUC value of 0.5 signifies that performance is equivalent to chance.
 
 Prediction Bias -> A quick check that can flag issues with the model or training data early on (the difference).
 

@@ -1,6 +1,7 @@
 import keras
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 import ml_edu.results
 import ml_edu.experiment
@@ -153,6 +154,112 @@ def train_model(
         name=experiment_name,
         settings=settings,
         model=model,
-        epochs=history.epochs,
+        epochs=history.epoch,
         metrics_history=pd.DataFrame(history.history),
     )
+
+
+# Experiment 1
+settings = ml_edu.experiment.ExperimentSettings(
+    learning_rate=0.01,
+    number_epochs=60,
+    batch_size=100,
+    classification_threshold=0.35,
+    input_features=input_features,
+)
+
+metrics: list = [
+    keras.metrics.BinaryAccuracy(
+        name="accuracy",
+        threshold=settings.classification_threshold,  # type: ignore
+    ),
+    keras.metrics.Precision(
+        name="precision", thresholds=settings.classification_threshold
+    ),
+    keras.metrics.Recall(name="recall", thresholds=settings.classification_threshold),
+    keras.metrics.AUC(num_thresholds=100, name="auc"),
+]
+
+plt.rcdefaults()
+keras.backend.clear_session()
+
+model = create_model(settings, metrics)
+
+experiment_1 = train_model("baseline", model, train_features, train_labels, settings)
+
+# Shown seperatly because the AUC threshold is 100, and the rest only for the specific threshold.
+ml_edu.results.plot_experiment_metrics(
+    experiment_1, ["accuracy", "precision", "recall"]
+)
+ml_edu.results.plot_experiment_metrics(experiment_1, ["auc"])
+
+
+# Validation
+def compare_train_validation(
+    experiment: ml_edu.experiment.Experiment, validation_metrics: dict[str, float]
+) -> None:
+    print("\nComparing metrics between train and validation:")
+    for metric, validation_value in validation_metrics.items():
+        print("------")
+        print(f"Train {metric}: {experiment.get_final_metric_value(metric):.4f}")
+        print(f"Validation {metric}:  {validation_value:.4f}")
+
+
+validation_metrics: dict[str, float] = experiment_1.evaluate(
+    validation_features, validation_labels
+)
+compare_train_validation(experiment=experiment_1, validation_metrics=validation_metrics)
+
+# To Improve
+all_input_features = [
+    "Eccentricity",
+    "Major_Axis_Length",
+    "Minor_Axis_Length",
+    "Area",
+    "Perimeter",
+    "Convex_Area",
+    "Extent",
+]
+
+# Experiment 2 - All features
+settings_all = ml_edu.experiment.ExperimentSettings(
+    learning_rate=0.01,
+    number_epochs=60,
+    batch_size=100,
+    classification_threshold=0.35,
+    input_features=all_input_features,
+)
+
+all_model = create_model(settings_all, metrics)
+
+experiment_2_all = train_model(
+    "baseline", all_model, train_features, train_labels, settings_all
+)
+
+ml_edu.results.plot_experiment_metrics(
+    experiment_2_all, ["accuracy", "precision", "recall"]
+)
+ml_edu.results.plot_experiment_metrics(experiment_2_all, ["auc"])
+
+validation_metrics_all: dict[str, float] = experiment_2_all.evaluate(
+    validation_features, validation_labels
+)
+compare_train_validation(
+    experiment=experiment_2_all, validation_metrics=validation_metrics_all
+)
+
+# Now Compare
+ml_edu.results.compare_experiment(
+    [experiment_1, experiment_2_all],
+    ["accuracy", "auc"],
+    validation_features,
+    validation_labels,
+)
+
+# Test
+test_metrics_all_features = experiment_2_all.evaluate(
+    test_features,
+    test_labels,
+)
+for metric, test_value in test_metrics_all_features.items():
+    print(f"Test {metric}:  {test_value:.4f}")
