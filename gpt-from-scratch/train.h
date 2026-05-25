@@ -2,6 +2,7 @@
 #define TRAIN_H_
 
 #include <string>
+#include <vector>
 
 /**
  1. Collect the data set.
@@ -9,7 +10,5 @@
  3. Get size of the dataset.
  4. Tokenize
  */
-
-struct Tensor {};
 
 #endif
