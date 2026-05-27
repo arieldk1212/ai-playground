@@ -219,3 +219,4 @@ __marimo__/
 
 # Project
 resources/
+Cargo.lock
