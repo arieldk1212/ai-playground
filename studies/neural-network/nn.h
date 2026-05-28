@@ -1,6 +1,7 @@
 #ifndef NN_H_
 #define NN_H_
 
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
