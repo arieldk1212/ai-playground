@@ -51,6 +51,16 @@ class KernalMath:
         fx.memref_store_vec(vC, rC)
         fx.copy_atom_call(copy_atom, rC, fx.slice(tC, (None, tid)))
 
+    @staticmethod
+    @flyc.kernel
+    def vec_mul_kernel(
+        A: fx.Tensor,  # type: ignore
+        B: fx.Tensor,  # type: ignore
+        C: fx.Tensor,  # type:ignore
+        block_dim: fx.Constexpr,
+    ):
+        pass
+
 
 class Math:
     @staticmethod
@@ -66,5 +76,20 @@ class Math:
         grid_x = (n + block_dim - 1) // block_dim
 
         KernalMath.vec_add_kernel(A, B, C, block_dim).launch(
+            grid=(grid_x, 1, 1), block=[block_dim, 1, 1], stream=stream.value
+        )
+
+    def vec_mul(
+        A: fx.Tensor,  # type:ignore
+        B: fx.Tensor,  # type:ignore
+        C: fx.Tensor,  # type:ignore
+        n: fx.Int32,
+        const_n: fx.Constexpr[int],
+        stream: fx.Stream = fx.Stream(None),
+    ):
+        block_dim: int = 64
+        grid_x = (n + block_dim - 1) // block_dim
+
+        KernalMath.vec_mul_kernel(A, B, C, block_dim).launch(
             grid=(grid_x, 1, 1), block=[block_dim, 1, 1], stream=stream.value
         )
