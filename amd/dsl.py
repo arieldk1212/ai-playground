@@ -1,6 +1,8 @@
 import flydsl.expr as fx
 import flydsl.compiler as flyc
 
+import tinygrad
+
 # AMD Torch guide
 # https://github.com/nikos230/Run-Pytorch-with-AMD-Radeon-GPU/blob/main/check_pytorch.py
 

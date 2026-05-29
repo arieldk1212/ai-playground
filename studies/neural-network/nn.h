@@ -16,7 +16,7 @@ struct Connection {
 
 class Neuron {
  public:
-  explicit Neuron(uint8_t outputs) { std::cout << "Neuron Created!\n"; }
+  explicit Neuron(uint8_t outputs) {}
 
  private:
   double output_;
@@ -32,7 +32,7 @@ class Net {
 
     for (int i = 0; i < layers_.size(); ++i) {
       uint8_t num_outputs{0};
-      if (i != layers_.size() - 1) {
+      if (i < layers_.size() - 1) {
         num_outputs = topology.topology[i + 1];
       }
 
