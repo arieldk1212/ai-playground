@@ -1,4 +1,0 @@
-Style:
-  AngledHeaders:
-    # public headers (under include/seastar) use angle brackets
-    - "seastar/.*"
