@@ -8,5 +8,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(vendor)
 
-
-add_subdirectory(test/amd)
+add_subdirectory(vendor/seastar)
+add_subdirectory(test)
