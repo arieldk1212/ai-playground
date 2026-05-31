@@ -1,3 +1,6 @@
 [submodule "happy-hacking/vendor/seastar"]
 	path = happy-hacking/vendor/seastar
 	url = https://github.com/scylladb/seastar.git
+[submodule "happy-hacking/rocm_hacking/vendor/rocm_systems"]
+	path = happy-hacking/rocm_hacking/vendor/rocm_systems
+	url = https://github.com/ROCm/rocm-systems.git
