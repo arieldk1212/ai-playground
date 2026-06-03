@@ -25,3 +25,6 @@ dependencies = [
 ]
 
 # 2.5.0.dev20240802+rocm6.0 -> pytorch
+#pytorch-triton-rocm==3.0.0+21eae954ef
+# - torchaudio==2.4.0.dev20240822+rocm6.0
+# - torchvision==0.20.0.dev20240822+rocm6.0
