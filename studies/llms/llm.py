@@ -39,4 +39,8 @@ NN:
       complete model, we can't ask it questions and expect answers.
 
 POST-TRAINING
+
+* Knowledge in the parameters == Vage recollection (e.g of something i read 1 month ago).
+* Knowledge in the tokens of the context window == Working memory (Go study this, then tell me x..), can be
+  better and more high quality because it has a first access to the data, its in the context window.
 """

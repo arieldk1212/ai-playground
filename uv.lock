@@ -43,7 +43,6 @@ dependencies = [
     { name = "tensorflow" },
     { name = "tinygrad" },
     { name = "torch" },
-    { name = "triton" },
 ]
 
 [package.metadata]
@@ -64,7 +63,6 @@ requires-dist = [
     { name = "tensorflow", specifier = ">=2.21.0" },
     { name = "tinygrad", specifier = ">=0.12.0" },
     { name = "torch", specifier = ">=2.11.0" },
-    { name = "triton", specifier = ">=3.6.0" },
 ]
 
 [[package]]

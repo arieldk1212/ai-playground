@@ -28,7 +28,29 @@ Scheduling:
         large computre graph into subgraphs that can fit in a kernel.
 
 Lowering:
-    * 
+    * The code in engine/realize.py basically lowers each CALL  by compiling its AST into
+        a program and running it. 
+    * To get more info and deep dive into the complexity, start by examining the codegen folder.
+    * First we lower the AST to UOps (Linear list to run), this is where the BEAM search
+        happens, Then we render the UOps into code with a "Renderer", then we compile   the code
+        to binary with a Compiler.
+
+Execution:
+    * run_linear walks the LINEAR UOp, dispatching each CALL to a runner (kernel, view, copy, encdec or graph).
+
+Runtimes:
+    * They handle device specific interactions, They handle tasks such as initializing devices, allocating memory,
+        loading/launching programs and more.
+"""
+
+"""
+Graph flow down to programs:
+
+1. tinygrad/schedule -> Group UOps into kernels -- get_kernel_graph().
+2. tinygrad/codegen/opt -> Transform the ast into an optimized ast. This is where BEAM search and heuristics live.
+3. tinygrad/codegen -> Transform the optimized ast into a linearized and rendered program -- to_program().
+4. tinygrad/renderer -> Transform the linearized list of UOps into a program, represented as a string -- render().
+5. tinygrad/engine -> Abstracted high level interface to the runtimes -- to_program().
 """
 
 
