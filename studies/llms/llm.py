@@ -43,4 +43,11 @@ POST-TRAINING
 * Knowledge in the parameters == Vage recollection (e.g of something i read 1 month ago).
 * Knowledge in the tokens of the context window == Working memory (Go study this, then tell me x..), can be
   better and more high quality because it has a first access to the data, its in the context window.
+* The llm is running arithmetic in a single foward pass (it has very low computation) the NN, it
+  can be wrong, we should use code and take
+  advantage of python interpreter tool.
+  Models cant count, not good at spelling,
+
+* After training and having the base model we get into supervised fine tuning step and turning the model
+  into some sort of an assistant.
 """
